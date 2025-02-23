@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_stack
 {
@@ -28,6 +29,8 @@ typedef struct s_stack
 	int	index;
 
 }	t_stack;
+
+//void	print_stack(t_stack *stack);
 
 int		*create_stack(int ac, char **av);
 void	order_sort(t_stack *stack);

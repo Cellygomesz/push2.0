@@ -13,7 +13,6 @@
 #include "push_swap.h"
 
 static void	insert_index(t_stack *stack)
-
 {
 	int	i;
 	int	j;
@@ -36,7 +35,6 @@ static void	insert_index(t_stack *stack)
 }
 
 static int	bits_to_op(t_stack *stack)
-
 {
 	int	size;
 	int	bits;
@@ -77,15 +75,17 @@ void	radix(t_stack *stack)
 	int	j;
 	int	size;
 	int	bits;
+	int	len_b;
 
 	bits = bits_to_op(stack);
 	i = 0;
 	size = stack->len_a;
 	sort_list(stack->len_a, stack->list);
 	insert_index(stack);
-	while (validate_order(stack) != 1 && i != bits)
+	while ((validate_order(stack) == 1 || stack->len_b != 0) && (i != bits))
 	{
 		j = 0;
+		size = stack->len_a;
 		while (j < size)
 		{
 			if ((((stack->a[0] >> i) & 1) == 1))
@@ -94,8 +94,16 @@ void	radix(t_stack *stack)
 				pb(stack, 0);
 			j++;
 		}
-		while (stack->len_b > 0)
-			pa(stack, 0);
+		j = 0;
+		len_b = stack->len_b;
+		while (j < len_b)
+		{
+			if ((((stack->b[0] >> (i + 1)) & 1) == 1) || i == (bits - 1))
+				pa(stack, 0);
+			else
+				rb(stack, 0);
+			j++;
+		}
 		i++;
 	}
 }

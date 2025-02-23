@@ -11,6 +11,28 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+ /*
+void	print_stack(t_stack *stack)
+{
+	int	i;
+
+	i = 0;
+	printf("------------------------------------\n");
+	while (stack->len_a > i)
+	{
+		printf("stack a: %d\n", stack->a[i]);
+		i++;
+	}
+	i = 0;
+	printf("------------------------------------\n");
+	while (stack->len_b > i)
+	{
+		printf("stack b: %d\n", stack->b[i]);
+		i++;
+	}
+	printf("------------------------------------\n");
+}*/
+
 
 static void	init_stack(t_stack *stack, char **av)
 {
