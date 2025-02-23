@@ -12,24 +12,25 @@
 
 #include "push_swap.h"
 
-static void	insert_index(t_stack *stack)
+void	insert_index(t_stack *stack)
 {
 	int	i;
 	int	j;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (i < stack->len_a)
 	{
 		j = 0;
 		while (j < stack->len_a)
 		{
-			if (stack->a[i] == stack->list[j])
-			{
-				stack->list[i] = j;
-				break ;
-			}
+			if (stack->list[i] > stack->list[j])
+				count++;
 			j++;
 		}
+		stack->a[i] = count;
+		count = 0;
 		i++;
 	}
 }
@@ -46,26 +47,20 @@ static int	bits_to_op(t_stack *stack)
 	return (bits);
 }
 
-// nao esta ordenando corretamente
-static void	sort_list(int len, int *stack)
+static void	radix_2(t_stack *stack, int bits, int i)
 {
-	int	i;
 	int	j;
-	int	temp;
+	int	len_b;
 
-	i = 0;
-	while (++i < len)
+	j = 0;
+	len_b = stack->len_b;
+	while (j < len_b)
 	{
-		j = -1;
-		while (++j < len -1)
-		{
-			if (stack[i] > stack[j + 1])
-			{
-				temp = stack[j];
-				stack[j] = stack[j + 1];
-				stack[j + 1] = temp;
-			}
-		}
+		if ((((stack->b[0] >> (i + 1)) & 1) == 1) || i == (bits - 1))
+			pa(stack, 0);
+		else
+			rb(stack, 0);
+		j++;
 	}
 }
 
@@ -75,12 +70,10 @@ void	radix(t_stack *stack)
 	int	j;
 	int	size;
 	int	bits;
-	int	len_b;
 
 	bits = bits_to_op(stack);
 	i = 0;
 	size = stack->len_a;
-	sort_list(stack->len_a, stack->list);
 	insert_index(stack);
 	while ((validate_order(stack) == 1 || stack->len_b != 0) && (i != bits))
 	{
@@ -94,16 +87,7 @@ void	radix(t_stack *stack)
 				pb(stack, 0);
 			j++;
 		}
-		j = 0;
-		len_b = stack->len_b;
-		while (j < len_b)
-		{
-			if ((((stack->b[0] >> (i + 1)) & 1) == 1) || i == (bits - 1))
-				pa(stack, 0);
-			else
-				rb(stack, 0);
-			j++;
-		}
+		radix_2(stack, bits, i);
 		i++;
 	}
 }

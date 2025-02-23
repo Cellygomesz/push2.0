@@ -12,12 +12,6 @@
 
 #include "push_swap.h"
 
-void	error(int fd)
-{
-	ft_putendl_fd("Error", fd);
-	exit(1);
-}
-
 int	is_number(char **av)
 {
 	int	i;
@@ -27,6 +21,8 @@ int	is_number(char **av)
 	while (av[++i])
 	{
 		j = 0;
+		if (av[i][0] == '\0')
+			error(2);
 		if (av[i][j] == '+' || av[i][j] == '-')
 		{
 			if (!ft_isdigit(av[i][++j]))
@@ -54,7 +50,7 @@ static int	validate_duplicate(t_stack *stack)
 		j = i + 1;
 		while (j < stack->len_a)
 		{
-			if (stack->a[i] == stack->a[j])
+			if (stack->list[i] == stack->list[j])
 				return (1);
 			j++;
 		}
@@ -70,23 +66,42 @@ int	validate_order(t_stack *stack)
 	i = 1;
 	while (i < stack->len_a)
 	{
-		if (stack->a[i - 1] > stack->a[i])
+		if (stack->list[i - 1] > stack->list[i])
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int	validate_stack(t_stack *stack)
+int	check_size(char **av)
 {
+	int	i;
+
+	i = 1;
+	while (av[i])
+	{
+		if (ft_atol(av[i]) < -2147483648 || ft_atol(av[i]) > 2147483647)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	validate_stack(t_stack *stack, char **av)
+{
+	if (check_size(av) == 1)
+	{
+		free(stack->list);
+		error(2);
+	}
 	if (validate_duplicate(stack))
 	{
-		free(stack->a);
+		free(stack->list);
 		error(2);
 	}
 	if (!validate_order(stack))
 	{
-		free(stack->a);
+		free(stack->list);
 		return (0);
 	}
 	return (1);

@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void easy_op(char *op, t_stack *stack)
+static void	easy_op(char *op, t_stack *stack)
 {
 	if (ft_strncmp(op, "ra", 2) == 0)
 	{
@@ -31,7 +31,7 @@ static void easy_op(char *op, t_stack *stack)
 	}
 }
 
-static int search_min(t_stack *stack)
+static int	search_min(t_stack *stack)
 {
 	int	min;
 	int	i;
@@ -54,25 +54,25 @@ static void	sort_3(t_stack *stack)
 {
 	if (stack->a[0] > stack->a[1] && stack->a[1] < stack->a[2] \
 		&& stack->a[0] < stack->a[2])
-			sa(stack->a, 0);
-		else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] \
+		sa(stack->a, 0);
+	else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] \
 		&& stack->a[0] > stack->a[2])
-			rra(stack, 0);
-		else if (stack->a[0] > stack->a[1] && stack->a[0] > stack->a[2] \
+		rra(stack, 0);
+	else if (stack->a[0] > stack->a[1] && stack->a[0] > stack->a[2] \
 		&& stack->a[1] < stack->a[2])
-			ra(stack, 0);
-		else if (stack->a[0] > stack->a[1] && stack->a[0] > stack->a[2] \
+		ra(stack, 0);
+	else if (stack->a[0] > stack->a[1] && stack->a[0] > stack->a[2] \
 		&& stack->a[1] > stack->a[2])
-		{
-			sa(stack->a, 0);
-			rra(stack, 0);
-		}
-		else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] \
+	{
+		sa(stack->a, 0);
+		rra(stack, 0);
+	}
+	else if (stack->a[0] < stack->a[1] && stack->a[1] > stack->a[2] \
 		&& stack->a[2] > stack->a[0])
-		{
-			rra(stack, 0);
-			sa(stack->a, 0);
-		}
+	{
+		rra(stack, 0);
+		sa(stack->a, 0);
+	}
 }
 
 static void	sort_5(t_stack *stack)
@@ -101,7 +101,6 @@ static void	sort_5(t_stack *stack)
 	sort_3(stack);
 	easy_op("pa", stack);
 }
-
 
 void	order_sort(t_stack *stack)
 {

@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 typedef struct s_stack
 {
@@ -30,21 +29,19 @@ typedef struct s_stack
 
 }	t_stack;
 
-//void	print_stack(t_stack *stack);
-
 int		*create_stack(int ac, char **av);
 void	order_sort(t_stack *stack);
+void	insert_index(t_stack *stack);
 void	radix(t_stack *stack);
 void	error(int fd);
 int		is_number(char **av);
-int		validate_stack(t_stack *stack);
+int		validate_stack(t_stack *stack, char **av);
 int		validate_order(t_stack *stack);
-
+long	ft_atol(const char *nptr);
 void	sa(int *stack_a, int valid);
 void	ra(t_stack *stack, int valid);
 void	rra(t_stack	*stack, int valid);
 void	pa(t_stack *stack, int valid);
-
 void	sb(int *stack_b, int valid);
 void	rb(t_stack *stack, int valid);
 void	rrb(t_stack	*stack, int valid);

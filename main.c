@@ -11,38 +11,22 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
- /*
-void	print_stack(t_stack *stack)
+
+void	error(int fd)
 {
-	int	i;
-
-	i = 0;
-	printf("------------------------------------\n");
-	while (stack->len_a > i)
-	{
-		printf("stack a: %d\n", stack->a[i]);
-		i++;
-	}
-	i = 0;
-	printf("------------------------------------\n");
-	while (stack->len_b > i)
-	{
-		printf("stack b: %d\n", stack->b[i]);
-		i++;
-	}
-	printf("------------------------------------\n");
-}*/
-
+	ft_putendl_fd("Error", fd);
+	exit(1);
+}
 
 static void	init_stack(t_stack *stack, char **av)
 {
 	stack->b = ft_calloc(sizeof(int), stack->len_a);
-	stack->list = create_stack(stack->len_a, av);
+	stack->a = create_stack(stack->len_a, av);
 	stack->len_b = 0;
 	stack->index = 0;
 }
 
-static long	ft_atol(const char *nptr)
+long	ft_atol(const char *nptr)
 {
 	long	i;
 	long	neg;
@@ -92,16 +76,19 @@ int	main(int ac, char **av)
 {
 	t_stack	stack;
 
+	is_number(av);
+	stack.len_a = ac - 1;
+	stack.list = create_stack(stack.len_a, av);
+	if (!validate_stack(&stack, av))
+		return (0);
 	if (ac < 3)
 		return (0);
 	else
 	{
-		is_number(av);
-		stack.len_a = ac - 1;
-		stack.a = create_stack(stack.len_a, av);
-		if (!validate_stack(&stack))
-			return (0);
 		init_stack(&stack, av);
+		insert_index(&stack);
 		order_sort(&stack);
 	}
+	free(stack.list);
+	free(stack.a);
 }
